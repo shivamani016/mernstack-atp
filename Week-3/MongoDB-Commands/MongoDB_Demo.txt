@@ -1,0 +1,471 @@
+//CHECKING DATABASES//
+
+show databases
+admin       40.00 KiB
+anuragdb   120.00 KiB
+anuragdb2   68.00 KiB
+config      72.00 KiB
+local       76.00 KiB
+mydb         8.00 KiB
+
+//CREATE OR SWITCH DATABASE//
+
+use anuragdb
+switched to db anuragdb
+
+//CREATE AND CHECK COLLECTIONS//
+
+db.createCollection("players")
+{ ok: 1 }
+show collections
+emps
+players
+users
+
+//INSERT ONE/MANY DOCS //
+
+db.players.insertOne({name:"abhi",age:21,city:"hyd",game:"hockey"})
+{
+  acknowledged: true,
+  insertedId: ObjectId('697f404aaef1b25794e54234')
+}
+db.players.insertMany([{name:"bunty",age:20,city:"sec",game:"cricket"},{name:"charan",age:24,city:"hyd",game:"basketball"}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('697f40a8aef1b25794e54235'),
+    '1': ObjectId('697f40a8aef1b25794e54236')
+  }
+}
+
+//READ ONE/MANY DOCS. //
+
+db.players.findOne()
+{
+  _id: ObjectId('697f404aaef1b25794e54234'),
+  name: 'abhi',
+  age: 21,
+  city: 'hyd',
+  game: 'hockey'
+}
+db.players.find()
+{
+  _id: ObjectId('697f404aaef1b25794e54234'),
+  name: 'abhi',
+  age: 21,
+  city: 'hyd',
+  game: 'hockey'
+}
+{
+  _id: ObjectId('697f40a8aef1b25794e54235'),
+  name: 'bunty',
+  age: 20,
+  city: 'sec',
+  game: 'cricket'
+}
+{
+  _id: ObjectId('697f40a8aef1b25794e54236'),
+  name: 'charan',
+  age: 24,
+  city: 'hyd',
+  game: 'basketball'
+}
+
+//QUERY OPERATORS (eq,ne,gt,lt,lte,gte,in) //
+
+db.players.find({age:{$eq:21}})
+{
+  _id: ObjectId('697f404aaef1b25794e54234'),
+  name: 'abhi',
+  age: 21,
+  city: 'hyd',
+  game: 'hockey'
+}
+db.players.find({age:{$gt:21}})
+{
+  _id: ObjectId('697f40a8aef1b25794e54236'),
+  name: 'charan',
+  age: 24,
+  city: 'hyd',
+  game: 'basketball'
+}
+db.players.find({age:{$gte:21}})
+{
+  _id: ObjectId('697f404aaef1b25794e54234'),
+  name: 'abhi',
+  age: 21,
+  city: 'hyd',
+  game: 'hockey'
+}
+{
+  _id: ObjectId('697f40a8aef1b25794e54236'),
+  name: 'charan',
+  age: 24,
+  city: 'hyd',
+  game: 'basketball'
+}
+db.players.find({age:{$lte:21}})
+{
+  _id: ObjectId('697f404aaef1b25794e54234'),
+  name: 'abhi',
+  age: 21,
+  city: 'hyd',
+  game: 'hockey'
+}
+{
+  _id: ObjectId('697f40a8aef1b25794e54235'),
+  name: 'bunty',
+  age: 20,
+  city: 'sec',
+  game: 'cricket'
+}
+db.players.find({age:{$lt:21}})
+{
+  _id: ObjectId('697f40a8aef1b25794e54235'),
+  name: 'bunty',
+  age: 20,
+  city: 'sec',
+  game: 'cricket'
+}
+db.players.find({age:{$ne:21}})
+{
+  _id: ObjectId('697f40a8aef1b25794e54235'),
+  name: 'bunty',
+  age: 20,
+  city: 'sec',
+  game: 'cricket'
+}
+{
+  _id: ObjectId('697f40a8aef1b25794e54236'),
+  name: 'charan',
+  age: 24,
+  city: 'hyd',
+  game: 'basketball'
+}
+db.players.find({city:{$in:["hyd"]}})
+{{
+  _id: ObjectId('697f40a8aef1b25794e54236'),
+  name: 'charan',
+  age: 24,
+  city: 'hyd',
+  game: 'basketball'
+}
+  _id: ObjectId('697f404aaef1b25794e54234'),
+  name: 'abhi',
+  age: 21,
+  city: 'hyd',
+  game: 'hockey'
+}
+//LOGICAL OPERATORS//
+
+/(AND)
+db.players.find({$and:[{city:"hyd"},{age:21}]})
+{
+  _id: ObjectId('697f404aaef1b25794e54234'),
+  name: 'abhi',
+  age: 21,
+  city: 'hyd',
+  game: 'hockey'
+}
+
+/(OR)
+db.players.find({$or:[{city:"hyd"},{age:21}]})
+{
+  _id: ObjectId('697f404aaef1b25794e54234'),
+  name: 'abhi',
+  age: 21,
+  city: 'hyd',
+  game: 'hockey'
+}
+{
+  _id: ObjectId('697f40a8aef1b25794e54236'),
+  name: 'charan',
+  age: 24,
+  city: 'hyd',
+  game: 'basketball'
+}
+
+/(NOT)
+db.players.find({age:{$not:{$lt:23}}})
+{
+  _id: ObjectId('697f40a8aef1b25794e54236'),
+  name: 'charan',
+  age: 24,
+  city: 'hyd',
+  game: 'basketball'
+}
+
+//UPDATE ONE AND MANY DOCUMENTS//
+
+db.players.updateOne(
+  { name: "charan" },
+  { $set: { age: 22 } }
+)
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+db.players.updateMany(
+  { city: "hyd" },
+  { $set: { city: "HYD" } }
+)
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 2,
+  modifiedCount: 2,
+  upsertedCount: 0
+}
+
+//DELETE ONE/MANY DOCS. //
+
+db.players.deleteOne({ name: "charan" })
+{
+  acknowledged: true,
+  deletedCount: 1
+}
+db.players.deleteMany({ city: "HYD" })
+{
+  acknowledged: true,
+  deletedCount: 1
+}
+
+//INSERT DOC WITH NESTED OBJ //
+
+db.players.insertOne({
+  name: "rahul",
+  address: {
+    city: "bangalore",
+    pincode: 560001
+  }
+})
+{
+  acknowledged: true,
+  insertedId: ObjectId('697f455eaef1b25794e54237')
+}
+db.players.find({ "address.city": "bangalore" })
+{
+  _id: ObjectId('697f455eaef1b25794e54237'),
+  name: 'rahul',
+  address: {
+    city: 'bangalore',
+    pincode: 560001
+  }
+}
+
+//INSERT ARRAY FIELD WITH NESTED OBJ //
+
+
+db.players.insertOne({
+  name: "priya",
+  skills: ["java", "mongodb", "python"]
+})
+{
+  acknowledged: true,
+  insertedId: ObjectId('697f45abaef1b25794e54238')
+}
+/SINGLE ELEMENT COMPARISION/
+
+db.players.find({ skills: "mongodb" })
+{
+  _id: ObjectId('697f45abaef1b25794e54238'),
+  name: 'priya',
+  skills: [
+    'java',
+    'mongodb',
+    'python'
+  ]
+}
+/MULTIPLE ELEMENTS COMPARISION/
+
+db.players.find({ skills: { $all: ["java", "python"] } })
+{
+  _id: ObjectId('697f45abaef1b25794e54238'),
+  name: 'priya',
+  skills: [
+    'java',
+    'mongodb',
+    'python'
+  ]
+}
+
+//UPDATE NESTED DOC //
+/SET/
+
+db.players.updateOne(
+  { name: "rahul" },
+  { $set: { "address.city": "mysore" } }
+)
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+/UNSET/
+
+db.players.updateOne(
+  { name: "rahul" },
+  { $unset: { "address.pincode": "" } }
+)
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+//UPDATE ARRAY //
+/ADD SINGLE ELEMENT/
+
+db.players.updateOne(
+  { name: "priya" },
+  { $push: { skills: "nodejs" } }
+)
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+/ADD MULTIPLE ELEMENTS/
+
+db.players.updateOne(
+  { name: "priya" },
+  { $push: { skills: { $each: ["docker", "aws"] } } }
+)
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+//REMOVE ELEMENTS FROM ARRAY//
+/LAST ELEMENT/
+
+db.players.updateOne(
+  { name: "priya" },
+  { $pop: { skills: -1 } }
+)
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+/FIRST ELEMENT/
+
+db.players.updateOne(
+  { name: "priya" },
+  { $pop: { skills: 1 } }
+)
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+db.players.find()
+{
+  _id: ObjectId('697f40a8aef1b25794e54235'),
+  name: 'bunty',
+  age: 20,
+  city: 'sec',
+  game: 'cricket'
+}
+{
+  _id: ObjectId('697f455eaef1b25794e54237'),
+  name: 'rahul',
+  address: {
+    city: 'mysore'
+  }
+}
+{
+  _id: ObjectId('697f45abaef1b25794e54238'),
+  name: 'priya',
+  skills: [
+    'mongodb',
+    'python',
+    'nodejs',
+    'docker'
+  ]
+}
+
+/REMOVE SPECIFIC ELEMENT/
+
+db.players.updateOne(
+  { name: "priya" },
+  { $pull: { skills: "java" } }
+)
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+
+/REMOVE MULTIPLE ELEMENTS/
+
+db.players.updateOne(
+  { name: "priya" },
+  { $pullAll: { skills: ["aws", "docker"] } }
+)
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+//UPDATING ARRAY OF DOCUMENTS//
+
+db.players.insertOne({
+  name: "arjun",
+  marks: [
+    { subject: "maths", score: 80 },
+    { subject: "science", score: 75 }
+  ]
+})
+{
+  acknowledged: true,
+  insertedId: ObjectId('697f47c8aef1b25794e54239')
+}
+
+//UPDATE NESTED FIELD USING INDEX//
+
+db.players.updateOne(
+  { name: "arjun" },
+  { $set: { "marks.0.score": 90 } }
+)
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+//ARRAY INDEX ACCESSING //
+
+let x = [{ a: 10 }, { a: 20 }]
+x[0].a 
+10
+
+
+
+
+

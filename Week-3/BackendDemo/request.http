@@ -1,0 +1,67 @@
+GET http://127.0.0.1:3000/users-api/users
+
+
+###
+POST http://127.0.0.1:3000/users-api/users
+Content-Type: application/json
+
+{
+    "id":100,
+    "name":"ravi",
+    "age":20
+}
+
+
+###
+PUT http://127.0.0.1:3000/users-api/users
+Content-Type: application/json
+
+{
+    "id":100,
+    "name":"ravikumar",
+    "age":21
+}
+
+
+###
+GET http://127.0.0.1:3000/users-api/users/100
+###
+DELETE http://127.0.0.1:3000/users-api/users/100
+
+
+
+###
+GET http://127.0.0.1:3000/products-api/products
+
+
+###
+POST http://127.0.0.1:3000/products-api/products
+Content-Type: application/json
+
+{
+    "productId":100,
+    "name":"car",
+    "brand":"suziki",
+    "price":200000
+}
+
+
+###
+PUT http://127.0.0.1:3000/products-api/products
+Content-Type: application/json
+
+{
+    "productId":100,
+    "name":"car",
+    "brand":"mruthi",
+    "price":200000
+}
+
+
+###
+GET http://127.0.0.1:3000/products-api/products/100
+###
+DELETE http://127.0.0.1:3000/products-api/products/100
+
+###
+GET http://127.0.0.1:3000/products-api/products-brand/suziki

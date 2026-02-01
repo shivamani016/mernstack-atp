@@ -1,7 +1,7 @@
 {
-  "name": "readme",
+  "name": "backdemo",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple backend demo",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,7 +11,6 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
-    "express": "^5.2.1",
-    "mongoose": "^9.1.5"
+    "express": "^5.2.1"
   }
 }

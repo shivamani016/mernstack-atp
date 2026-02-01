@@ -18,7 +18,7 @@ productApp.get('/products',async(req,res)=>{
 
 productApp.post('/products',async(req,res)=>{
     let newproduct=req.body;
-    //create new user document
+    //create new product document
     let newproductdoc=new ProductModel(newproduct)
     //save in db
     await newproductdoc.save()
@@ -31,19 +31,19 @@ productApp.post('/products',async(req,res)=>{
 productApp.get('/products/:id',async(req,res)=>{
     //get obj id from url poarameter
     let objId=req.params.id;
-    //find user in db
+    //find product in db
     let productObj=await ProductModel.findById(objId)
 
     res.status(200).json({message:"product is:",payload:productObj})
 })
 
 
-//update an user
+//update an product
 
 productApp.put('/products/:id',async(req,res)=>{
     //get objid from url params
     let objId=req.params.id
-    //get mpdofied user from req
+    //get mpdofied product from req
     let modifiedproduct=req.body
     //make update
     let latestproduct=await ProductModel.findByIdAndUpdate(objId,
@@ -54,11 +54,11 @@ productApp.put('/products/:id',async(req,res)=>{
     res.status(200).json({message:"producr updated",payload:latestproduct})
 })
 
-//Detele
+//Detele product
 productApp.delete('/products/:id',async(req,res)=>{
     //get objid from url params
     let objId=req.params.id
-    //delete user by id
+    //delete product by id
     let deleteproduct=await ProductModel.findByIdAndDelete(objId)
     //send res
     res.status(200).json({message:"product deleted",payload:deleteproduct})

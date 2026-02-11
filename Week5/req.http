@@ -1,0 +1,119 @@
+### USER Register
+POST http://localhost:4000/user-api/users
+Content-Type: application/json
+
+{
+  "firstName": "user",
+  "lastName": "user",
+  "email": "user@gmail.com",
+  "password": "user",
+  "profileImageUrl": ""
+}
+### USER LOGIN
+POST http://localhost:4000/common-api/login
+Content-Type: application/json
+
+{
+  "email": "user@gmail.com",
+  "password": "user"
+}
+
+### Auther  Register
+POST http://localhost:4000/author-api/users
+Content-Type: application/json
+
+{
+  "firstName": "author",
+  "lastName": "author",
+  "email": "authorr@gmail.com",
+  "password": "author",
+  "profileImageUrl": ""
+}
+###Author  loging
+POST http://localhost:4000/common-api/login
+Content-Type: application/json
+
+{
+  "email": "authorr@gmail.com",
+  "password": "authorr"
+}
+###Create Article
+POST http://localhost:4000/author-api/articles
+Content-Type: application/json
+
+{
+  "author": "698c89fb9faa3c810fe2c30f",
+  "title": "testacticle",
+  "category": "programming",
+  "content": "testing  content"
+}
+### READ ARTICLES BY AUTHOR
+GET http://localhost:4000/author-api/articles/698c89fb9faa3c810fe2c30f
+
+
+###edit Article
+PUT  http://localhost:4000/author-api/articles
+Content-Type: application/json
+
+{
+  "author": "698c89fb9faa3c810fe2c30f",
+  "articleId":"698c8a649faa3c810fe2c314",
+  "title": "test article",
+  "category": "programming",
+  "content": "content of test article"
+}
+
+### SOFT DELETE ARTICLE
+PUT http://localhost:4000/author-api/articles/soft-delete
+Content-Type: application/json
+
+{
+  "author": "698c89fb9faa3c810fe2c30f",
+  "articleId": "698c8a649faa3c810fe2c314"
+}
+
+
+### SOFT Restore ARTICLE
+PUT http://localhost:4000/author-api/articles/restore
+Content-Type: application/json
+
+{
+  "author": "698c89fb9faa3c810fe2c30f",
+  "articleId": "698c8a649faa3c810fe2c314"
+}
+###read articles by user
+GET http://localhost:4000/user-api/articles/69896e58240129dcf1c88661
+
+
+
+###logout
+GET  http://localhost:4000/common-api/logout
+
+
+
+### block the user
+PUT http://localhost:4000/admin-api/users
+Content-Type: application/json
+
+{
+  "author": "698c89c69faa3c810fe2c30c"
+}
+
+
+### unblock the user
+PUT http://localhost:4000/admin-api/users/unblock
+Content-Type: application/json
+
+{
+  "author": "698c89c69faa3c810fe2c30c"
+}
+
+###change the password
+PUT http://localhost:4000/common-api/change-password
+Content-Type: application/json
+
+{
+  "email":"authorr@gmail.com",
+  "oldPassword":"author",
+  "newPassword":"authorr"
+}

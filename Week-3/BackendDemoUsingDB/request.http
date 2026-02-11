@@ -1,0 +1,60 @@
+GET http://localhost:4000/user-api/users
+
+### read user by obj id
+GET http://localhost:4000/user-api/users/697f0b15d6ede703a24f3a61
+
+###
+POST http://localhost:4000/user-api/users
+Content-Type: application/json
+
+{
+    "username":"shivi",
+    "password":"12345",
+    "age":21
+
+}
+
+###
+PUT http://localhost:4000/user-api/users/697f0b15d6ede703a24f3a61
+Content-Type: application/json
+
+{
+    "username":"swamy",
+    "password":"12345",
+    "age":21
+
+}
+
+###delete user by objid
+DELETE http://localhost:4000/user-api/users/697f357488b7b750fd4fbeae
+
+### read all the products
+GET http://localhost:4000/product-api/products
+
+### add a product
+POST http://localhost:4000/product-api/products
+Content-Type: application/json
+
+{
+    "productname":"ironbox",
+    "brand":"crompton",
+    "price":2100
+
+}
+
+### update product 
+PUT  http://localhost:4000/product-api/products/697f0b81d6ede703a24f3a68
+Content-Type: application/json
+
+{
+    "productname":"cars",
+    "brand":"maruthi",
+    "price":2100
+
+}
+
+### delete user by id
+DELETE http://localhost:4000/product-api/products/697f0b81d6ede703a24f3a68
+
+### rread user by id
+GET http://localhost:4000/product-api/products/697f35af88b7b750fd4fbeb0
